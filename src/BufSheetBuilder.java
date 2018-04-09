@@ -6,6 +6,15 @@ import java.util.Map;
  *
  */
 public class BufSheetBuilder {
+    /*
+    * TODO -> 순장별로 만들 수 있을지?
+    * 1. 마을 별 순장 리스트
+    * 2. 순장 별 순원 리스트 (순장 포함)
+    * 3. 순원 별 열 번호 맵
+    * 4. 마을 별 IMPORT_RANGE 함수 템플릿 맵
+    * 5. 1+2 -> 헤더 생성
+    * 6. 2+3+4 -> 헤더 이외의 row 생성
+    */
     private static final Map<String, String> TOWN_HEADER_MAP = new HashMap<>();
     static {
         TOWN_HEADER_MAP.put("동아리", "타임스탬프\t\t순장선택\t김창균08\t김현종11\t박예슬08\t유소리08\t이수임10\t이정선11\t인웅진07\t정명재08\t최지효11\t김진우10\t김충만11\t노하나09\t선우영진09\t신한나10\t양경모09\t이태석11\t전미정11\t조지훈10\t김은진09\t박예지10\t설재경08\t송지혜07\t안도원09\t안지혜07\t이민지06\t이은애09\t이철11\t이효진08\t임지혜10\t정찬희06\t배인성09\t강슬기10\t강유정06\t김은애10\t윤현주08\t이세호09\t이종혁11\t이지현10\t임현택09\t장영수11\t장원종08\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t목사님/대표순장님께\t순모임 장소, 시간, 분위기\t순 특별 기도제목\t[선택] 특이사항 (경조사 / 출타자 등)\t[필수] 순모임 날짜");
