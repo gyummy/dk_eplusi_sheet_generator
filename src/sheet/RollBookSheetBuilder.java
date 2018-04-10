@@ -1,10 +1,10 @@
 package sheet;
 
-import org.Town;
-import utility.DateUtility;
-import utility.IndexHelper;
+        import org.Town;
+        import utility.DateUtility;
+        import utility.IndexHelper;
 
-import java.util.concurrent.atomic.AtomicInteger;
+        import java.util.concurrent.atomic.AtomicInteger;
 
 /**
  * Created by Gyummy on 2018-04-09.
@@ -43,9 +43,6 @@ public class RollBookSheetBuilder {
     }
 
     public static String build(Town town) {
-        StringBuilder builder = new StringBuilder();
-        builder.append(headerRow).append("\n")
-                .append(buildBodyRow(town));
-        return builder.toString();
+        return headerRow + "\n" + buildBodyRow(town);
     }
 }

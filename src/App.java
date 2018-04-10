@@ -1,5 +1,6 @@
 import org.OrgManager;
 import sheet.RollBookSheetBuilder;
+import sheet.RollInfoSheetBuilder;
 import sheet.TempSheetBuilder;
 import utility.FileUtility;
 
@@ -14,9 +15,11 @@ public class App {
         OrgManager.build(INPUT_ROOT_PATH + "/metaInfo");
         String tempSheetFileDir = OUTPUT_ROOT_PATH + "/tempSheet";
         String rollBookSheetFileDir = OUTPUT_ROOT_PATH + "/rollBookSheet";
+        String rollInfoSheetFileDir = OUTPUT_ROOT_PATH + "/rollInfoSheet";
         OrgManager.getTownSet().forEach(town -> {
             FileUtility.checkDirectory(tempSheetFileDir);
             FileUtility.checkDirectory(rollBookSheetFileDir);
+            FileUtility.checkDirectory(rollInfoSheetFileDir);
             try {
                 String bufSheetFilePath = tempSheetFileDir + "/" + town.toString() + "_tempSheet";
                 FileUtility.write(bufSheetFilePath, TempSheetBuilder.build(town));
@@ -25,6 +28,10 @@ public class App {
                 String rollBookSheetFilePath = rollBookSheetFileDir + "/" + town.toString() + "_rollBookSheet";
                 FileUtility.write(rollBookSheetFilePath, RollBookSheetBuilder.build(town));
                 System.out.println("A file for the rook book sheet of town '" + town + "' is printed out: " + rollBookSheetFilePath);
+
+                String rollInfoSheetFilePath = rollInfoSheetFileDir + "/" + town.toString() + "_rollInfoSheet";
+                FileUtility.write(rollInfoSheetFilePath, RollInfoSheetBuilder.build(town));
+                System.out.println("A file for the rook book sheet of town '" + town + "' is printed out: " + rollInfoSheetFilePath);
             } catch (IOException e) {
                 System.err.println("An error is occurred while writing a fie: " + e.getMessage());
             }
