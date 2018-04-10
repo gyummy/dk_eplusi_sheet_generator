@@ -1,32 +1,41 @@
-import java.util.*;
+import org.OrgManager;
+import sheet.BufSheetBuilder;
+import utility.FileUtility;
+
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 public class App {
-    private static final String ROOT_PATH = "output";
-    private static final String[] PATHS = {
-            ROOT_PATH + "/동아리",
-            ROOT_PATH + "/봉봉",
-            ROOT_PATH + "/빛진",
-            ROOT_PATH + "/사랑",
-            ROOT_PATH + "/삼",
-            ROOT_PATH + "/세",
-            ROOT_PATH + "/지안"
-    };
+    private static final String INPUT_ROOT_PATH = "input";
+    private static final String OUTPUT_ROOT_PATH = "output";
 
 
     public static void main(String[] argv) {
-        for(String path : PATHS) {
-            FileUtility.checkDirectory(path + "/buf");
+        OrgManager.build(INPUT_ROOT_PATH + "/metaInfo");
+        String bufSheetFileDir = OUTPUT_ROOT_PATH + "/bufSheet";
+        OrgManager.getTownSet().forEach(town -> {
+            FileUtility.checkDirectory(bufSheetFileDir);
+            try {
+                String bufSheetFilePath = bufSheetFileDir + "/" + town.toString() + "_bufSheet";
+                FileUtility.write(bufSheetFilePath, BufSheetBuilder.build(town));
+                System.out.println("A file for the buf sheet of town '" + town + "' is printed out: " + bufSheetFilePath);
+            } catch (IOException e) {
+                System.err.println("An error is occurred while writing a fie: " + e.getMessage());
+            }
+        });
 
-        }
-//        FileUtility.checkDirectory("before");
-//        FileUtility.checkDirectory("after");
+
+//        utility.FileUtility.checkDirectory("before");
+//        utility.FileUtility.checkDirectory("after");
 //
 //        String url = "https://docs.google.com/spreadsheets/d/1CFg22k-huGZaJK4O3rUkBbHJj1VyatFfAQw1qXPfoEM/edit";
 //        String sheetName = "1_박동은_대표순장";
 //        String fileName = "buf_" + sheetName;
 //        try {
-//            String buf = convert(url, sheetName, FileUtility.read("before/" + fileName));
-//            FileUtility.write("after/" + fileName, buf);
+//            String buf = convert(url, sheetName, utility.FileUtility.read("before/" + fileName));
+//            utility.FileUtility.write("after/" + fileName, buf);
 //        } catch (Exception e) {
 //            System.err.println("Error: " + e.getMessage());
 //            e.printStackTrace();
