@@ -25,7 +25,7 @@ public class IndexHelper {
         int converted = 0;
         int exp = col.length() - 1;
         for(int i = 0; i < col.length(); i++)
-            converted += (int) Math.pow(BASE, exp--) + (col.charAt(i) - 'A');
+            converted += (int) Math.pow(BASE, exp--) * (col.charAt(i) - 'A' + 1);
         return converted;
     }
 }

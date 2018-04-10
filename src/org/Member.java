@@ -7,24 +7,25 @@ package org;
 public class Member {
     private String name;
     private String peer;
-    private String column;
+    private String rawColumn;
+    private String tempColumn;
 
     public Member(String name) {
         this.name = name;
         this.peer = "N/A";
-        this.column = "N/A";
+        this.rawColumn = "N/A";
     }
 
     public Member(String name, String peer) {
         this.name = name;
         this.peer = peer;
-        this.column = "N/A";
+        this.rawColumn = "N/A";
     }
 
-    public Member(String name, String peer, String column) {
+    public Member(String name, String peer, String rawColumn) {
         this.name = name;
         this.peer = peer;
-        this.column = column;
+        this.rawColumn = rawColumn;
     }
 
     public String getName() {
@@ -43,12 +44,20 @@ public class Member {
         this.peer = peer;
     }
 
-    public String getColumn() {
-        return column;
+    public String getRawColumn() {
+        return rawColumn;
     }
 
-    public void setColumn(String column) {
-        this.column = column;
+    public void setRawColumn(String rawColumn) {
+        this.rawColumn = rawColumn;
+    }
+
+    public String getTempColumn() {
+        return tempColumn;
+    }
+
+    public void setTempColumn(String tempColumn) {
+        this.tempColumn = tempColumn;
     }
 
     @Override

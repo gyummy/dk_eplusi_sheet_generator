@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.concurrent.atomic.AtomicInteger;
 
 /**
  * Created by Gyummy on 2018-04-10.
@@ -96,5 +97,11 @@ public class Town {
     @Override
     public String toString() {
         return name + "마을";
+    }
+
+    public int size() {
+        AtomicInteger size = new AtomicInteger(0);
+        cellList.forEach(cell -> size.addAndGet(cell.size()));
+        return size.intValue();
     }
 }

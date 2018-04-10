@@ -54,4 +54,16 @@ public class Cell {
     public String toString() {
         return name + "순";
     }
+
+    public String getFirstTempColumn() {
+        return memberList.get(0).getTempColumn();
+    }
+
+    public String getLastTempColumn() {
+        return memberList.get(memberList.size() - 1).getTempColumn();
+    }
+
+    public int size() {
+        return memberList.size();
+    }
 }

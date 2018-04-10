@@ -1,11 +1,9 @@
 import org.OrgManager;
-import sheet.BufSheetBuilder;
+import sheet.RollBookSheetBuilder;
+import sheet.TempSheetBuilder;
 import utility.FileUtility;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
 
 public class App {
     private static final String INPUT_ROOT_PATH = "input";
@@ -14,17 +12,24 @@ public class App {
 
     public static void main(String[] argv) {
         OrgManager.build(INPUT_ROOT_PATH + "/metaInfo");
-        String bufSheetFileDir = OUTPUT_ROOT_PATH + "/bufSheet";
+        String tempSheetFileDir = OUTPUT_ROOT_PATH + "/tempSheet";
+        String rollBookSheetFileDir = OUTPUT_ROOT_PATH + "/rollBookSheet";
         OrgManager.getTownSet().forEach(town -> {
-            FileUtility.checkDirectory(bufSheetFileDir);
+            FileUtility.checkDirectory(tempSheetFileDir);
+            FileUtility.checkDirectory(rollBookSheetFileDir);
             try {
-                String bufSheetFilePath = bufSheetFileDir + "/" + town.toString() + "_bufSheet";
-                FileUtility.write(bufSheetFilePath, BufSheetBuilder.build(town));
-                System.out.println("A file for the buf sheet of town '" + town + "' is printed out: " + bufSheetFilePath);
+                String bufSheetFilePath = tempSheetFileDir + "/" + town.toString() + "_tempSheet";
+                FileUtility.write(bufSheetFilePath, TempSheetBuilder.build(town));
+                System.out.println("A file for the temp sheet of town '" + town + "' is printed out: " + bufSheetFilePath);
+
+                String rollBookSheetFilePath = rollBookSheetFileDir + "/" + town.toString() + "_rollBookSheet";
+                FileUtility.write(rollBookSheetFilePath, RollBookSheetBuilder.build(town));
+                System.out.println("A file for the rook book sheet of town '" + town + "' is printed out: " + rollBookSheetFilePath);
             } catch (IOException e) {
                 System.err.println("An error is occurred while writing a fie: " + e.getMessage());
             }
         });
+    }
 
 
 //        utility.FileUtility.checkDirectory("before");
@@ -40,48 +45,44 @@ public class App {
 //            System.err.println("Error: " + e.getMessage());
 //            e.printStackTrace();
 //        }
-    }
-
-    private static String convert(String url, String sheetName, String original) {
-        StringBuilder sb = new StringBuilder();
-        List<String> splitByTap = Arrays.asList(original.split("\\t"));
-        List<String> split = new ArrayList<>();
-        for(String s : splitByTap) {
-            int newLineIdx = s.indexOf("\r\n");
-            if(newLineIdx > -1) {
-                split.add(s.substring(0, newLineIdx + 2));
-                split.add(s.substring(newLineIdx + 2));
-            } else {
-                split.add(s);
-            }
-        }
-        for(String s : split) {
-            if (s.contains(sheetName)) {
-                int start, end;
-                if(s.indexOf(sheetName) == 0)
-                    s = "'" + s;
-                start = s.indexOf(sheetName) - 1;
-                end = s.indexOf(",", start);
-                if(end == -1)
-                    end = s.length();
-
-                String ref = s.substring(start, end);
-                if(ref.contains("\r\n"))
-                    s = s.replace(ref, "IMPORTRANGE(\"" + url + "\", \"" + ref.substring(0, s.indexOf("\r\n")) + "\")\r\n");
-                else
-                    s = s.replace(ref, "IMPORTRANGE(\"" + url + "\", \"" + ref + "\")");
-                sb.append("=");
-            } else if (s.startsWith("left")) {
-                s = "=" + s;
-            }
-            sb.append(s);
-            if(!s.contains("\n"))
-                sb.append("\t");
-        }
-        return sb.toString();
-    }
-
-    private static void buildBufSheet() {
-
-    }
+//    }
+//
+//    private static String convert(String url, String sheetName, String original) {
+//        StringBuilder sb = new StringBuilder();
+//        List<String> splitByTap = Arrays.asList(original.split("\\t"));
+//        List<String> split = new ArrayList<>();
+//        for(String s : splitByTap) {
+//            int newLineIdx = s.indexOf("\r\n");
+//            if(newLineIdx > -1) {
+//                split.add(s.substring(0, newLineIdx + 2));
+//                split.add(s.substring(newLineIdx + 2));
+//            } else {
+//                split.add(s);
+//            }
+//        }
+//        for(String s : split) {
+//            if (s.contains(sheetName)) {
+//                int start, end;
+//                if(s.indexOf(sheetName) == 0)
+//                    s = "'" + s;
+//                start = s.indexOf(sheetName) - 1;
+//                end = s.indexOf(",", start);
+//                if(end == -1)
+//                    end = s.length();
+//
+//                String ref = s.substring(start, end);
+//                if(ref.contains("\r\n"))
+//                    s = s.replace(ref, "IMPORTRANGE(\"" + url + "\", \"" + ref.substring(0, s.indexOf("\r\n")) + "\")\r\n");
+//                else
+//                    s = s.replace(ref, "IMPORTRANGE(\"" + url + "\", \"" + ref + "\")");
+//                sb.append("=");
+//            } else if (s.startsWith("left")) {
+//                s = "=" + s;
+//            }
+//            sb.append(s);
+//            if(!s.contains("\n"))
+//                sb.append("\t");
+//        }
+//        return sb.toString();
+//    }
 }
